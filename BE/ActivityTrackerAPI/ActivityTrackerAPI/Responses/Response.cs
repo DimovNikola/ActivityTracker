@@ -1,8 +1,8 @@
 ﻿namespace ActivityTrackerAPI.Responses
 {
-    public class Response
+    public class Response<T>
     {
-        public string? Status { get; set; }
+        public T? Content { get; set; }
         public string? Message { get; set; }
     }
 }

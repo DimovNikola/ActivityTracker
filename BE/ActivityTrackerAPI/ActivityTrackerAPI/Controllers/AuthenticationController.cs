@@ -49,14 +49,14 @@ namespace ActivityTrackerAPI.Controllers
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, "User not Created!");
 
             var result = await _authService.CreateUser(model);
 
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+                return StatusCode(StatusCodes.Status500InternalServerError, "User not Created!");
 
-            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+            return Ok("User Created!");
         }
 
         [HttpPost]
@@ -65,14 +65,14 @@ namespace ActivityTrackerAPI.Controllers
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, "Admin User not Created!");
 
             var result = await _authService.CreateAdmin(model);
 
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+                return StatusCode(StatusCodes.Status500InternalServerError, "Admin User not Created!");
 
-            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+            return Ok("Admin User Created!");
         }
     }
 }

@@ -4,6 +4,7 @@ using ActivityDataLayer.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ActivityDataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230416182752_added_image_model")]
+    partial class added_image_model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,9 +80,6 @@ namespace ActivityDataLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ActivityId")
-                        .IsUnique();
 
                     b.ToTable("ActivityImages");
                 });
@@ -305,17 +304,6 @@ namespace ActivityDataLayer.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ActivityDataLayer.Models.ActivityImage", b =>
-                {
-                    b.HasOne("ActivityDataLayer.Models.Activity", "Activity")
-                        .WithOne("ActivityImage")
-                        .HasForeignKey("ActivityDataLayer.Models.ActivityImage", "ActivityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Activity");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -364,12 +352,6 @@ namespace ActivityDataLayer.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ActivityDataLayer.Models.Activity", b =>
-                {
-                    b.Navigation("ActivityImage")
                         .IsRequired();
                 });
 
