@@ -16,6 +16,5 @@ namespace ActivityDataLayer.Models
         public byte[] Content { get; set; }
         [ForeignKey("Activity")]
         public int ActivityId { get; set; }
-        public Activity Activity { get; set; }
     }
 }

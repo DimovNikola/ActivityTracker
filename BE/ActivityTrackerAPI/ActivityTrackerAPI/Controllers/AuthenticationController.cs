@@ -1,8 +1,9 @@
 ﻿using ActivityBusinessLayer.Interfaces;
 using ActivityDataLayer.Models;
-
+using ActivityDataLayer.Roles;
 using ActivityTrackerAPI.Responses;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -42,7 +43,7 @@ namespace ActivityTrackerAPI.Controllers
             }
             return Unauthorized();
         }
-
+        [Authorize(UserRoles.Admin)]
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] Register model)

@@ -1,6 +1,7 @@
 ﻿using ActivityBusinessLayer.Interfaces;
 using ActivityDataLayer.DbContext;
 using ActivityDataLayer.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ActivityBusinessLayer.Services
 {
@@ -44,13 +46,43 @@ namespace ActivityBusinessLayer.Services
                 return -1;
             }
 
-            existingActivity.ActivityImage = activity.ActivityImage;
             existingActivity.Description = activity.Description;
             existingActivity.Name = activity.Name;
 
             await _dbContext.SaveChangesAsync();
 
-            return activity.Id;
+            return existingActivity.Id;
+        }
+
+        public async Task<int> MarkActivityCompleted(int activityId)
+        {
+            var existingActivity = await _dbContext.Activities.FindAsync(activityId);
+
+            if (existingActivity == null)
+            {
+                return -1;
+            }
+
+            existingActivity.Completed = true;
+
+            await _dbContext.SaveChangesAsync();
+
+            return existingActivity.Id;
+        }
+
+        public async Task<int> MarkActivityNeedHelp(int activityId)
+        {
+            var existingActivity = await _dbContext.Activities.FindAsync(activityId);
+
+            if (existingActivity == null)
+            {
+                return -1;
+            }
+
+            existingActivity.NeedHelp = true;
+            await _dbContext.SaveChangesAsync();
+
+            return existingActivity.Id;
         }
 
         public async Task<Activity> GetActivity(int activityId) => await _dbContext.Activities.FirstOrDefaultAsync(x => x.Id == activityId);
@@ -60,8 +92,44 @@ namespace ActivityBusinessLayer.Services
         public async Task<int> CreateActivity(Activity activity)
         {
             await _dbContext.Activities.AddAsync(activity);
+            await _dbContext.SaveChangesAsync();
+
 
             return activity.Id;
+        }
+
+        public async Task<int> AddImageToActivity(IFormFile file, int activityId)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return -1;
+            }
+
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                byte[] imageData = stream.ToArray();
+
+                var image = new ActivityImage
+                {
+                    ImageName = file.FileName,
+                    MimeType = file.ContentType,
+                    Content = imageData,
+                    ActivityId = activityId
+                };
+
+                _dbContext.ActivityImages.Add(image);
+                await _dbContext.SaveChangesAsync();
+
+                return image.Id;
+            }
+        }
+
+        public async Task<ActivityImage> GetActivityImage(int id)
+        {
+            var image = await _dbContext.ActivityImages.FindAsync(id);
+
+            return image;
         }
     }
 }

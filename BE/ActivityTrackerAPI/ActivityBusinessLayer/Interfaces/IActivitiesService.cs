@@ -1,4 +1,5 @@
 ﻿using ActivityDataLayer.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,9 @@ namespace ActivityBusinessLayer.Interfaces
         public Task<int> DeleteActivity(int activityId);
         public Task<Activity> GetActivity(int activityId);
         public Task<List<Activity>> GetAllActivities();
+        public Task<int> MarkActivityCompleted(int activityId);
+        public Task<int> MarkActivityNeedHelp(int activityId);
+        public Task<int> AddImageToActivity(IFormFile file, int activityId);
+        public Task<ActivityImage> GetActivityImage(int id);
     }
 }

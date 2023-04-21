@@ -13,7 +13,5 @@ namespace ActivityDataLayer.Models
         public string Description { get; set; }
         public bool Completed { get; set; }
         public bool NeedHelp { get; set; }
-        public User User { get; set; }
-        public ActivityImage ActivityImage { get; set; }
     }
 }
