@@ -35,7 +35,7 @@ namespace ActivityTrackerAPI.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("completedActivity")]
+        [Route("helpActivity")]
         public async Task<IActionResult> MarkActivityNeedHelp(int activityId)
         {
             var activity = await _activitiesService.MarkActivityNeedHelp(activityId);
@@ -93,7 +93,7 @@ namespace ActivityTrackerAPI.Controllers
             return new Response<List<Activity>> { Content = activities, Message = "Activities retrieved successfully!" };
         }
 
-        [Authorize(UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         [Route("create")]
         public async Task<Response<int>> CreateActivity(Activity activity)
@@ -108,7 +108,7 @@ namespace ActivityTrackerAPI.Controllers
             return new Response<int>() { Content = createdActivity, Message = $"Activity Created With ID {createdActivity}"};
         }
 
-        [Authorize(UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost]
         [Route("createActivityImage")]
         public async Task<Response<int>> CreateActivity(IFormFile file, int activityId)
@@ -123,7 +123,7 @@ namespace ActivityTrackerAPI.Controllers
             return new Response<int>() { Content = createdActivity, Message = $"Activity Image Created With ID {createdActivity}" };
         }
 
-        [Authorize(UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPut]
         [Route("edit/{id:int}")]
         public async Task<Response<int>> EditActivity(int id, Activity activity)
@@ -138,7 +138,7 @@ namespace ActivityTrackerAPI.Controllers
             return new Response<int>() { Content = editedActivity, Message = $"Activity Edited With ID {editedActivity}" };
         }
 
-        [Authorize(UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpDelete]
         [Route("delete/{id:int}")] 
         public async Task<Response<int>> DeleteActivity(int id)
