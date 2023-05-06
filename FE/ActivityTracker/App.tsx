@@ -65,16 +65,8 @@ function App(): JSX.Element {
             component={SigninAdult}
             options={{headerShown: false}}
           />
-          <Stack.Screen
-            name="AdultHomepage"
-            component={AdultHomepage}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="ChildHomePage"
-            component={ChildHomePage}
-            options={{headerShown: false}}
-          />
+          <Stack.Screen name="AdultHomepage" component={AdultHomepage} />
+          <Stack.Screen name="ChildHomePage" component={ChildHomePage} />
           <Stack.Screen
             name="ChildSignIn"
             component={ChildSignIn}

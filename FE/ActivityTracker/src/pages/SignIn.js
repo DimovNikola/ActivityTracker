@@ -24,6 +24,7 @@ function SignIn({navigation}) {
         <View style={styles.buttonStyle}>
           <Button
             mode="contained"
+            icon="star"
             contentStyle={styles.startButton}
             onPress={() => navigation.navigate('ChildSignIn')}>
             <Text

@@ -1,28 +1,36 @@
 import React from 'react';
-import {SafeAreaView, View, Text} from 'react-native';
-import {Button, TextInput} from 'react-native-paper';
+import {SafeAreaView, View, Text, StyleSheet} from 'react-native';
+import {TextInput, Button} from 'react-native-paper';
 
 function SigninAdult({navigation}) {
   return (
-    <SafeAreaView>
-      <View>
-        <View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.cntr}>
+        <View style={{width: '70%'}}>
           <Text>Username</Text>
           <TextInput />
-        </View>
-        <View>
           <Text>Password</Text>
           <TextInput />
         </View>
-        <View>
+        <View
+          style={{
+            paddingTop: 100,
+            justifyContent: 'space-around',
+            flexDirection: 'row',
+            alignItems: 'center',
+            width: '100%',
+          }}>
+          <Button
+            mode="contained"
+            icon="arrow-left"
+            contentStyle={{width: 100, height: 50}}
+            labelStyle={{fontSize: 30, fontWeight: 'bold'}}
+            onPress={() => navigation.navigate('SignIn')}></Button>
           <Button
             mode="contained"
             style={{backgroundColor: 'gray'}}
-            onPress={() => navigation.navigate('SignIn')}>
-            Back
-          </Button>
-          <Button mode="contained" style={{backgroundColor: 'gray'}}>
-            Sign In
+            onPress={() => navigation.navigate('AdultHomepage')}>
+            <Text>Sign In</Text>
           </Button>
         </View>
       </View>
@@ -31,3 +39,20 @@ function SigninAdult({navigation}) {
 }
 
 export default SigninAdult;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#98D8AA',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cntr: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'column',
+    width: '100%',
+    height: '80%',
+    justifyContent: 'space-around',
+  },
+});
